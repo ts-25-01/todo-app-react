@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList(){
+function TodoList({todos}){
     return (
         <div className="card">
                 <div className="card-header">
@@ -8,12 +8,14 @@ function TodoList(){
                 </div>
                 <div className="card-body">
                     <ul className="list-group list-group-flush">
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
+                        {todos.map(
+                            todo => (
+                                <TodoItem
+                                    key={todo.id}
+                                    todo={todo}
+                                    />
+                            )
+                        )}
                     </ul>
                 </div>
              </div>

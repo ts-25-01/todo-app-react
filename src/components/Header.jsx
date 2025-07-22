@@ -1,8 +1,8 @@
-function Header() {
+function Header({name, date}) {
     return (
-        <div class="container mt-7">
-            <h1 class="mb-6 text-center border">Todo-Liste</h1>
-            <p class="text-primary border text-center">
+        <div className="container mt-7">
+            <h1 className="mb-6 text-center border">Todo-Liste von {name} vom {date}</h1>
+            <p className="text-primary border text-center">
                 Was du heute kannst besorgen, verschieb auf Morgen-Liste!
             </p>
         </div>
