@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({todos}){
+function TodoList({todos, onDeleteTodo}){
     return (
         <div className="card">
                 <div className="card-header">
@@ -13,6 +13,7 @@ function TodoList({todos}){
                                 <TodoItem
                                     key={todo.id}
                                     todo={todo}
+                                    onDeleteTodo={onDeleteTodo}
                                     />
                             )
                         )}

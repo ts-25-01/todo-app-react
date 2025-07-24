@@ -1,4 +1,12 @@
-function TodoItem({todo}){
+function TodoItem({todo, onDeleteTodo}){
+    const handleDeleteClick = () => {
+        const confirmed = window.confirm(`${todo.title} wirklich löschen?`);
+        if (confirmed){
+            onDeleteTodo(todo.id);
+        }
+    }
+
+
     return (
         <>
         <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -16,7 +24,7 @@ function TodoItem({todo}){
         </div>
         <div>
             <button className="btn btn-warning btn-sm me-2">✏️</button>
-            <button className="btn btn-danger btn-sm">🗑️</button>
+            <button className="btn btn-danger btn-sm" onClick={handleDeleteClick}>🗑️</button>
         </div>
         </li>
         </>
