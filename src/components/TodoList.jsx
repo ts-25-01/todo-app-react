@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({todos, onDeleteTodo}){
+function TodoList({todos, onDeleteTodo, onToggleTodo, onEditTodo}){
     return (
         <div className="card">
                 <div className="card-header">
@@ -14,6 +14,8 @@ function TodoList({todos, onDeleteTodo}){
                                     key={todo.id}
                                     todo={todo}
                                     onDeleteTodo={onDeleteTodo}
+                                    onToggleTodo={onToggleTodo}
+                                    onEditTodo={onEditTodo}
                                     />
                             )
                         )}

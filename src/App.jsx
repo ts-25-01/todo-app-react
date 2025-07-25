@@ -78,6 +78,8 @@ function App() {
       const newTodoFromAPI = await response.json();
       // Wir müssen den Zustand der todos aktualisieren
       setTodos([newTodoFromAPI, ...todos]);
+      // ad Frage: Was passiert, wenn ich den state direkt verändere ohne setState?
+      // todos.push(newTodoFromAPI);
     } catch (error) {
       console.error("Fehler: ", error);
       alert("Das Hinzufügen ist fehlgeschlagen")
@@ -120,17 +122,48 @@ function App() {
       // und für jedes Element wird entschieden, was zurückkommt
       // für jedes t: prüfe ob t.id === todoOd ist, falls ja, dann nimm dafür updatedTodo
       // Falls nicht, übernimm das alte todo
-      setTodos(todos.map((t)=> (t.id === todoId ? updatedTodo : t)));
+      const newArrayForTodos = todos.map((t)=> (t.id === todoId ? updatedTodo : t))
+      setTodos(newArrayForTodos);
 
       const response = await fetch(`http://localhost:3000/todos/${todoId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', },
             body: JSON.stringify(updatedTodo)
-        })
+        });
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+      // console.log("Todo Daten", todo)
     } catch (error) {
-      
+      console.error("fehler", error);
     }
   }
+
+  const handleEditTodo = async (todoId, editTitle) => {
+    try {
+      // Finde das richtige Todo aus der Liste
+      const todo = todos.find((t) => t.id === todoId);
+      if (todo === undefined){
+        throw new Error("Bitte gib gültige ID ein");
+      };
+      const updatedTodo = { ...todo, title: editTitle };
+      const newArrayForTodos = todos.map((t)=> (t.id === todoId ? updatedTodo : t))
+      setTodos(newArrayForTodos);
+
+      const response = await fetch(`http://localhost:3000/todos/${todoId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify(updatedTodo)
+        });
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+      // console.log("Todo Daten", todo)
+    } catch (error) {
+      console.error("fehler", error);
+    }
+  }
+
 
   return (
     <>
@@ -141,7 +174,7 @@ function App() {
       <div className="container border mt-5 p-3">
         {/* Für unseren Lifting State Up: Gib die Funktion an die Komponente weiter! */}
         <TodoInput onAddTodo={handleAddTodo} />
-        <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo}/>
+        <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} onEditTodo={handleEditTodo}/>
       </div>
       <div>
         <p>Du hast {count} mal geklickt</p>
